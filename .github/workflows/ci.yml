@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:      
+      - feature/*
+      - hotfix/*      
+  pull_request:
+    branches:
+      - develop
+      - main
+      - release/*
+      
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar ambiente
+        run: |
+          echo "Configurando ambiente..."
+
+      - id: tests
+        name: Executar testes
+        run: |
+            echo "Rodando testes..."
+
+      - id: lint
+        name: Code quality
+        run: |
+          echo "Rodando testes..."
+
+      - id: build
+        name: Build da aplicação
+        run: |
+          echo "Build completo!"

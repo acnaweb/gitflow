@@ -1,6 +1,6 @@
 # Gitflow
 
-Continuous integration and continous deployment using Gitflow
+Continuous integration and continuous deployment using Gitflow
 
 ## O Gitflow
 

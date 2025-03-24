@@ -16,7 +16,7 @@ jobs:
       - name: Aprovação manual necessária
         uses: hmarr/auto-approve-action@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.REPOSITORY_TOKEN }}
 
       - name: Deploy para Staging
         run: |

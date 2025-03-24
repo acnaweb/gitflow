@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Manual Deploy
 
 on:
   workflow_dispatch:
@@ -25,6 +25,7 @@ jobs:
             exit 1
           fi
           echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          echo "TAG: ${GIT_TAG}"
 
       - name: Checkout código
         uses: actions/checkout@v4

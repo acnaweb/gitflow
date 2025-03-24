@@ -10,7 +10,7 @@ participant "Main" as Main
 participant "Hotfix/*" as Hotfix
 participant "Tag vX.Y.Z" as Tag
 
-group Stagging
+group Staging
     Feature -> Dev: Criação e merge das features
     Dev -> Release: Criar branch de release
     Release -> Tag: Criar tag beta (vX.Y.0-beta)

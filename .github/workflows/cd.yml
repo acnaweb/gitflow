@@ -6,13 +6,17 @@ on:
       - 'v*'    
 
 jobs:
-  deploy-production:
+  build-and-push:
     runs-on: ubuntu-latest
     environment: prd
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
 
+      - name: Extract tag name
+        run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Deploy para Produção
         run: |
           echo "Fazendo deploy para Produção..."
+          echo $GIT_TAG

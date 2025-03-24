@@ -18,6 +18,9 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
 
     steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+              
       - id: build
         name: Build da aplicação
         run: |

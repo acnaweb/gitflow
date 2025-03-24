@@ -27,52 +27,47 @@ jobs:
           curl -Lo terragrunt https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64
           chmod +x terragrunt
           sudo mv terragrunt /usr/local/bin/
-  terraform-apply:
-    name: "Terraform Apply"
-    needs: terraform-plan
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.environment || 'dev' }}
-    permissions:
-      id-token: write
-      contents: read
+  # terraform-apply:
+  #   name: "Terraform Apply"
+  #   needs: terraform-plan
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: ${{ github.event.inputs.environment || 'dev' }}
+  #   permissions:
+  #     id-token: write
+  #     contents: read
 
-    steps:
-      - name: Aguardar Aprovação Manual
-        uses: hmarr/auto-approve-action@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - name: Checkout código
+  #       uses: actions/checkout@v4
 
-      - name: Checkout código
-        uses: actions/checkout@v4
+  #     - name: Configurar autenticação no GCP
+  #       uses: google-github-actions/auth@v2
+  #       with:
+  #         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: Configurar autenticação no GCP
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+  #     - name: Configurar o Terraform
+  #       uses: hashicorp/setup-terraform@v3
+  #       with:
+  #         terraform_version: 1.7.2
 
-      - name: Configurar o Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.7.2
+  #     - name: Instalar o Terragrunt
+  #       run: |
+  #         curl -Lo terragrunt https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64
+  #         chmod +x terragrunt
+  #         sudo mv terragrunt /usr/local/bin/
 
-      - name: Instalar o Terragrunt
-        run: |
-          curl -Lo terragrunt https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64
-          chmod +x terragrunt
-          sudo mv terragrunt /usr/local/bin/
+  #     - name: Definir ambiente alvo
+  #       run: echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
 
-      - name: Definir ambiente alvo
-        run: echo "ENVIRONMENT=${{ github.event.inputs.environment || 'dev' }}" >> $GITHUB_ENV
+  #     - name: Baixar Artefato do Plano
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: terraform-plan-${{ env.ENVIRONMENT }}
+  #         path: envs/${{ env.ENVIRONMENT }}
 
-      - name: Baixar Artefato do Plano
-        uses: actions/download-artifact@v3
-        with:
-          name: terraform-plan-${{ env.ENVIRONMENT }}
-          path: envs/${{ env.ENVIRONMENT }}
-
-      - name: Aplicar Terraform (Terragrunt)
-        run: |
-          cd envs/${{ env.ENVIRONMENT }}
-          terragrunt apply -var-file=terraform.${{ env.ENVIRONMENT }}.tfvars -auto-approve          
+  #     - name: Aplicar Terraform (Terragrunt)
+  #       run: |
+  #         cd envs/${{ env.ENVIRONMENT }}
+  #         terragrunt apply -var-file=terraform.${{ env.ENVIRONMENT }}.tfvars -auto-approve          
   

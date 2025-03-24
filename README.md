@@ -41,11 +41,9 @@ Se houver uma correção urgente em produção, a estratégia é:
 - **`vX.Y.0`**: **Versão final** para produção.
 - **`hotfix/vX.Y.Z`**: Correções urgentes em produção.
 
-### Setup
+## Setup do Repositório
 
 - secrets.REPOSITORY_TOKEN 
-
-
 
 ## Releases/Tags
 

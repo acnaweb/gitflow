@@ -1,6 +1,11 @@
 name: Manual Deploy
 
 on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
+
   workflow_dispatch:
     inputs:
       environment:

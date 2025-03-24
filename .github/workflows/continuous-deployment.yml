@@ -19,6 +19,13 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
 
     steps:
+      - name: Verificar tag e executar
+        run: |
+          if [[ ! "${GITHUB_REF#refs/tags/}" =~ ^v ]]; then
+            echo "Tag não selecionada. Abortando o workflow."
+            exit 1
+          fi
+                
       - name: Checkout código
         uses: actions/checkout@v4
 
@@ -37,13 +44,7 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     needs: build
     steps:
-      - name: Verificar tag e executar
-        run: |
-          if [[ ! "${GITHUB_REF#refs/tags/}" =~ ^v ]]; then
-            echo "Tag não selecionada. Abortando o workflow."
-            exit 1
-          fi
-        
+       
       - name: Checkout código
         uses: actions/checkout@v4
 

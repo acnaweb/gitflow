@@ -13,11 +13,6 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Aprovação manual necessária
-        uses: hmarr/auto-approve-action@v3
-        with:
-          github-token: ${{ secrets.REPOSITORY_TOKEN }}
-
       - name: Deploy para Staging
         run: |
           echo "Fazendo deploy para Staging..."

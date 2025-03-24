@@ -1,0 +1,34 @@
+@startuml image
+
+title Gitflow
+footer Disponível em: https://github.com/acnaweb/gitflow
+
+participant "Develop" as Dev
+participant "Feature/*" as Feature
+participant "Release/Sprint-XX" as Release
+participant "Main" as Main
+participant "Hotfix/*" as Hotfix
+participant "Tag vX.Y.Z" as Tag
+
+group Stagging
+    Feature -> Dev: Criação e merge das features
+    Dev -> Release: Criar branch de release
+    Release -> Tag: Criar tag beta (vX.Y.0-beta)
+    Release -> Release: Correções no Staging (vX.Y.1-beta, etc.)
+end 
+
+group Production
+    Release -> Main: Merge para Produção
+    Main -> Tag: Criar tag final (vX.Y.0)
+    Release -> Dev: Merge das correções de Staging para Develop
+end
+
+group Hotfix
+    Main -> Hotfix: Correção urgente em Produção
+    Hotfix -> Main: Merge do hotfix
+    Hotfix -> Dev: Merge do hotfix em Develop
+end 
+
+
+
+@enduml

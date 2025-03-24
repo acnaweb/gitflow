@@ -1,15 +1,24 @@
 name: Continuous Deployment
 
 on:
-  push:
-    tags:
-      - 'v*'    
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Digite uma tag para disparar o workflow'
+        required: true
+        type: string
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     environment: prd
+
     steps:
+      - name: Verificar tag e executar
+        if: startsWith(github.event.inputs.tag, 'v')  
+        run: |
+          echo "Disparando o workflow para a tag ${GITHUB_REF}"
+          
       - name: Checkout código
         uses: actions/checkout@v4
 

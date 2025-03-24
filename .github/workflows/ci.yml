@@ -2,14 +2,11 @@ name: Continuous Integration
 
 on:
   push:
-    branches:      
-      - feature/*
-      - hotfix/*      
-  pull_request:
     branches:
       - develop
-      - main
+      - feature/*
       - release/*
+      - hotfix/*
       
 jobs:
   test-and-build:
@@ -22,7 +19,7 @@ jobs:
         run: |
           echo "Configurando ambiente..."
 
-      - id: tests
+      - id: unit_tests
         name: Executar testes
         run: |
             echo "Rodando testes..."
@@ -35,4 +32,9 @@ jobs:
       - id: build
         name: Build da aplicação
         run: |
-          echo "Build completo!"
+          docker build -t image .
+
+      - id: integration_test
+        name: Teste integrado
+        run: |
+          docker run image echo "Teste integrado"

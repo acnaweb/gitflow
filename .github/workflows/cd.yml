@@ -60,7 +60,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: $GIT_TAG
-          name: "Release ${GIT_TAG} ${{ github.event.inputs.environment }}"
+          name: Release ${{ github.ref_name }} ${{ github.event.inputs.environment }}
           body: "Descrição automática da release baseada na tag."
           draft: false
           prerelease: false

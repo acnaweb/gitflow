@@ -28,7 +28,7 @@ jobs:
         run: |
           docker run image echo "Teste integrado"
 
-  push:
+  push-and-release:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     needs: build
@@ -39,12 +39,29 @@ jobs:
             echo "Tag não selecionada. Abortando o workflow."
             exit 1
           fi
-          echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV          
-
+        
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Deploy para Produção
+      - name: Definir variáveis de ambiente
         run: |
-          echo "Fazendo deploy para Produção..."
+          echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV          
+
+
+      - name: Deploy
+        run: |
+          echo "Fazendo deploy para  ${{ github.event.inputs.environment }}"
           echo $GIT_TAG
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: $GIT_TAG
+          name: Release $GIT_TAG ${{ github.event.inputs.environment }}
+          body: "Descrição automática da release baseada na tag."
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}          
+
+

@@ -3,15 +3,19 @@ name: Continuous Deployment
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Digite uma tag para disparar o workflow'
-        required: true
-        type: string
+      environment:
+        description: 'Escolha o ambiente para deploy'
+        type: choice
+        required: true        
+        options:
+          - dev
+          - stg
+          - prd
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: prd
+    environment: ${{ github.event.inputs.environment }}
 
     steps:
       - name: Verificar tag e executar

@@ -51,10 +51,10 @@ Se houver uma correção urgente em produção, a estratégia é:
 
 ```sh
 # Criar uma tag localmente
-git tag -a v0.1.4 -m "Primeira release oficial" 
+git tag -a v0.1.5 -m "Setup CD" 
 
 # Enviar a tag para o repositório
-git push origin v0.1.4
+git push origin v0.1.5
 ```
 
 #### Listar tags

@@ -24,11 +24,10 @@ jobs:
             echo "Tag não selecionada. Abortando o workflow."
             exit 1
           fi
+          echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
       - name: Checkout código
         uses: actions/checkout@v4
-
-      - name: Extract tag name
-        run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Deploy para Produção
         run: |

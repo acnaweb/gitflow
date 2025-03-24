@@ -1,0 +1,20 @@
+name: CD-Production
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: prd
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Deploy para Produção
+        run: |
+          echo "Fazendo deploy para Produção..."

@@ -32,7 +32,7 @@ jobs:
         run: |
           docker run image echo "Teste integrado"
 
-  push-and-release:
+  push:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     needs: build

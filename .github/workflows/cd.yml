@@ -19,10 +19,11 @@ jobs:
 
     steps:
       - name: Verificar tag e executar
-        if: startsWith(github.event.inputs.tag, 'v')  
         run: |
-          echo "Disparando o workflow para a tag ${GITHUB_REF}"
-          
+          if [[ ! "${GITHUB_REF}" =~ ^v ]]; then
+            echo "Tag não selecionada. Abortando o workflow."
+            exit 1
+          fi
       - name: Checkout código
         uses: actions/checkout@v4
 

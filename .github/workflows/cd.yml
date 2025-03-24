@@ -13,10 +13,25 @@ on:
           - prd
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
 
+    steps:
+      - id: build
+        name: Build da aplicação
+        run: |
+          docker build -t image .
+
+      - id: integration_test
+        name: Teste integrado
+        run: |
+          docker run image echo "Teste integrado"
+
+  push:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    needs: build
     steps:
       - name: Verificar tag e executar
         run: |

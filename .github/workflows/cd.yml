@@ -55,16 +55,6 @@ jobs:
         run: |
           echo "Fazendo deploy para  ${{ github.event.inputs.environment }}"
           echo $GIT_TAG
-
-      - name: Criar Release no GitHub
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: $GIT_TAG
-          name: Release ${{ github.ref_name }} ${{ github.event.inputs.environment }}
-          body: "Descrição automática da release baseada na tag."
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}          
+    
 
 

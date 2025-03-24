@@ -1,0 +1,26 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Qualquer tag que começa com "v"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: $GIT_TAG
+          name: Release ${{ github.ref_name }} ${{ github.event.inputs.environment }}
+          body: "Descrição automática da release baseada na tag."
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}    
+
+  

@@ -1,4 +1,4 @@
-name: CD-Staging
+name: Continuous Deployment - STG
 
 on:
   push:
